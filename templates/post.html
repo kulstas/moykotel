@@ -1,0 +1,82 @@
+<!-- POST TEMPLATE -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block page_content %}
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-3">
+                            <div class="d-flex align-items-center mt-lg-5 mb-4">
+                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{ post.post_author.author_user }}</div>
+                                    <div class="text-muted">{{ post.post_type}}</div>
+                                    <hr>
+                                    {% if user.is_superuser and post.post_type == 'AR' %}
+                                        <div class="text-muted">
+                                            <a href="{% url 'post_update' post.pk %}">Редактировать</a>
+                                        </div>
+                                        <div class="text-muted">
+                                            <a href="{% url 'post_delete' post.pk %}">Удалить</a>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-muted">
+                                            <a href="{% url 'news_update' post.pk %}">Редактировать</a>
+                                        </div>
+                                        <div class="text-muted">
+                                            <a href="{% url 'news_delete' post.pk %}">Удалить</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h1 class="fw-bolder mb-1">{{ post.post_title }}</h1>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">{{ post.post_date|date_format }}</div>
+                                    <!-- Post categories-->
+                                    {% for category in post.post_category.all %}
+                                        <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'posts_search' %}?post_category={{ category.id }}">{{ category.category_name }}</a>
+                                    {% endfor %}
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    {{ post.post_text|censor }}
+                                </section>
+                            </article>
+                            <!-- Comments section-->
+                            <section>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <!-- Comment form-->
+                                        <form class="mb-4">
+                                            <textarea class="form-control" rows="3" placeholder="Оставьте свой комментарий тут!"></textarea>
+                                        </form>
+                                        <!-- Single comment-->
+                                        {% if comments %}
+                                            {% for comment in comments %}
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                                    <div class="ms-3">
+                                                        <div class="fw-bold">{{ comment.comment_user.username }}</div>
+                                                        {{ comment.comment_text }}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock page_content %}
