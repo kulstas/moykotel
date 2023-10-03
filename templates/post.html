@@ -20,12 +20,18 @@
                                         <div class="text-muted">
                                             <a href="{% url 'post_delete' post.pk %}">Удалить</a>
                                         </div>
+                                        <div class="text-muted">
+                                            <a href="{% url 'post_create' %}">Добавить пост</a>
+                                        </div>
                                     {% else %}
                                         <div class="text-muted">
                                             <a href="{% url 'news_update' post.pk %}">Редактировать</a>
                                         </div>
                                         <div class="text-muted">
                                             <a href="{% url 'news_delete' post.pk %}">Удалить</a>
+                                        </div>
+                                        <div class="text-muted">
+                                            <a href="{% url 'news_create' %}">Добавить новость</a>
                                         </div>
                                     {% endif %}
                                 </div>
