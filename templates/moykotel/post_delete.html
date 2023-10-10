@@ -1,29 +1,19 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'moykotel/default.html' %}
 
 {% block page_content %}
-            <section class="py-5">
+
+<section class="py-5">
                 <div class="container px-5">
                     <!-- Contact form-->
                     <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                         <div class="text-center mb-5">
-                            <h1 class="fw-bolder">Редактирование поста</h1>
+                            <h1 class="fw-bolder">Удаление поста</h1>
                         </div>
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- * * SB Forms Contact Form * *-->
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- This form is pre-integrated with SB Forms.-->
-                                <!-- To make this form functional, sign up at-->
-                                <!-- https://startbootstrap.com/solution/contact-forms-->
-                                <!-- to get an API token!-->
                                 <form id="contactForm" action="" method="post">
                                     {% csrf_token %}
-                                    {{ form.as_p }}
-                                    <!-- Submit success message-->
-                                    <!---->
-                                    <!-- This is what your users will see when the form-->
-                                    <!-- has successfully submitted-->
+                                    <p style="text-align: center">Удаляем "{{ object.post_title }}"?</p>
                                     <div class="d-none" id="submitSuccessMessage">
                                         <div class="text-center mb-3">
                                             <div class="fw-bolder">Form submission successful!</div>
@@ -32,15 +22,11 @@
                                             <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                         </div>
                                     </div>
-                                    <!-- Submit error message-->
-                                    <!---->
-                                    <!-- This is what your users will see when there is-->
-                                    <!-- an error submitting the form-->
                                     <div class="d-none" id="submitErrorMessage">
                                           <div class="text-center text-danger mb-3">Error sending message!</div></div>
                                     <!-- Submit Button-->
                                     <div class="d-grid">
-                                          <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Редактировать пост</button></div>
+                                          <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Удалить пост</button></div>
                                 </form>
                             </div>
                         </div>
@@ -48,11 +34,4 @@
                 </div>
             </section>
 
-<!--<h1>Редактирование товара</h1>-->
-<!--<hr>-->
-<!--<form action="" method="post">-->
-<!--      {% csrf_token %}-->
-<!--      {{ form.as_p }}-->
-<!--      <input type="submit" value="Save" />-->
-<!--</form>-->
 {% endblock page_content %}

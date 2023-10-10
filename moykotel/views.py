@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from datetime import datetime
 
@@ -13,7 +13,7 @@ from .filters import PostsFilter
 def index(request):
     return render(
         request,
-        'index.html'
+        'moykotel/index.html'
     )
 
 
@@ -22,7 +22,7 @@ class PostsList(ListView):
     ordering = 'post_title'
 
     # Имя шаблона
-    template_name = 'posts.html'
+    template_name = 'moykotel/posts.html'
 
     # Зависит от регистра.
     context_object_name = 'posts'
@@ -46,7 +46,7 @@ class PostsList(ListView):
 
 class PostsSearch(ListView):
     model = Post
-    template_name = 'search.html'
+    template_name = 'moykotel/search.html'
     context_object_name = 'posts'
     paginate_by = 6
 
@@ -64,7 +64,7 @@ class PostsSearch(ListView):
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'post.html'
+    template_name = 'moykotel/post.html'
     context_object_name = 'post'
     pk_url_kwarg = 'id'
 
@@ -72,14 +72,16 @@ class PostDetail(DetailView):
 class CommentsPost(ListView):
     model = Comment
     ordering = 'comment_date'
-    template_name = 'post.html'
+    template_name = 'moykotel/post.html'
     context_object_name = 'comments'
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('moykotel.add_post')
+    raise_exception = True
     form_class = PostForm
     model = Post
-    template_name = 'post_create.html'
+    template_name = 'moykotel/post_create.html'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -87,21 +89,26 @@ class PostCreate(CreateView):
         return super().form_valid(form)
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('moykotel.change_post')
+    raise_exception = True
     form_class = PostForm
     model = Post
-    template_name = 'post_edit.html'
+    template_name = 'moykotel/post_edit.html'
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('moykotel.delete_post')
+    raise_exception = True
     model = Post
-    template_name = 'post_delete.html'
+    template_name = 'moykotel/post_delete.html'
     success_url = reverse_lazy('posts_list')
+
 
 class NewsList(ListView):
     model = Post
     ordering = 'post_date'
-    template_name = 'news.html'
+    template_name = 'moykotel/news.html'
     context_object_name = 'news'
     queryset = Post.objects.filter(post_type__contains='NW')  # отфильтровываем новости
     paginate_by = 6
@@ -111,10 +118,13 @@ class NewsList(ListView):
         context['time_now'] = datetime.utcnow()
         return context
 
-class NewsCreate(CreateView):
+
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('moykotel.add_news')
+    raise_exception = True
     form_class = PostForm
     model = Post
-    template_name = 'post_create.html'
+    template_name = 'moykotel/post_create.html'
 
     def form_valid(self, form):
         news = form.save(commit=False)

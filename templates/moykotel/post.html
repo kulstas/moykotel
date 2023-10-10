@@ -1,5 +1,5 @@
 <!-- POST TEMPLATE -->
-{% extends 'flatpages/default.html' %}
+{% extends 'moykotel/default.html' %}
 {% load custom_filters %}
 
 {% block page_content %}
@@ -13,26 +13,38 @@
                                     <div class="fw-bold">{{ post.post_author.author_user }}</div>
                                     <div class="text-muted">{{ post.post_type}}</div>
                                     <hr>
-                                    {% if user.is_superuser and post.post_type == 'AR' %}
-                                        <div class="text-muted">
-                                            <a href="{% url 'post_update' post.pk %}">Редактировать</a>
-                                        </div>
-                                        <div class="text-muted">
-                                            <a href="{% url 'post_delete' post.pk %}">Удалить</a>
-                                        </div>
-                                        <div class="text-muted">
-                                            <a href="{% url 'post_create' %}">Добавить пост</a>
-                                        </div>
+                                    {% if post.post_type == 'AR' %}
+                                        {% if perms.moykotel.change_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'post_update' post.pk %}">Редактировать пост</a>
+                                            </div>
+                                        {% endif %}
+                                        {% if perms.moykotel.delete_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'post_delete' post.pk %}">Удалить пост</a>
+                                            </div>
+                                        {% endif %}
+                                        {% if perms.moykotel.add_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'post_create' %}">Добавить пост</a>
+                                            </div>
+                                        {% endif %}
                                     {% else %}
-                                        <div class="text-muted">
-                                            <a href="{% url 'news_update' post.pk %}">Редактировать</a>
-                                        </div>
-                                        <div class="text-muted">
-                                            <a href="{% url 'news_delete' post.pk %}">Удалить</a>
-                                        </div>
-                                        <div class="text-muted">
-                                            <a href="{% url 'news_create' %}">Добавить новость</a>
-                                        </div>
+                                        {% if perms.moykotel.change_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'news_update' post.pk %}">Редактировать новость</a>
+                                            </div>
+                                        {% endif %}
+                                        {% if perms.moykotel.delete_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'news_delete' post.pk %}">Удалить новость</a>
+                                            </div>
+                                        {% endif %}
+                                        {% if perms.moykotel.add_post %}
+                                            <div class="text-muted">
+                                                <a href="{% url 'news_create' %}">Добавить новость</a>
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

@@ -23,6 +23,7 @@ from .views import PostsList, PostDetail, PostsSearch, PostCreate, PostUpdate, P
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('pages/', include("django.contrib.flatpages.urls")),
     path('oshibki-kotlov/', PostsList.as_view(), name='posts_list'),
     path('oshibki-kotlov/<int:id>', PostDetail.as_view(), name='post_detail'),
