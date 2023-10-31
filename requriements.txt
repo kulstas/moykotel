@@ -2,3 +2,4 @@ Django
 Pillow
 django-filter
 django-allauth
+python-decouple
