@@ -39,13 +39,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
+
     "moykotel",
     "fpages",
     "accounts",
+
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.yandex",
+    "reset_migrations",
+    "django_apscheduler",
 ]
 
 SITE_ID = 2
@@ -67,7 +71,7 @@ ROOT_URLCONF = "moykotel.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates/")],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -137,11 +141,40 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # присоединяем CSS
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+SITE_URL = 'http://127.0.0.1:8000'
+
 LOGIN_REDIRECT_URL = '/news'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'help@moykotel.com'
+EMAIL_HOST_PASSWORD = 'rQhimKkaZhSPjsFkxXFz'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+EMAIL_SUBJECT_PREFIX = '[MoyKotel] '
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+
+MANAGERS = (
+    ('Manager', 'kulstas@gmail.com	'),
+)
+
+ADMINS = (
+    ('Admin', 'kulagin@alltrade.biz'),
+)
+
+APSCHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

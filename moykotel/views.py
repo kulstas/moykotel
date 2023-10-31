@@ -1,12 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
+from django.db.models import Exists, OuterRef
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponse
 
 from datetime import datetime
 
-from .models import Post, Comment
-from .forms import PostForm
+from .models import Post, Category, Comment, Subscriber
+from .forms import PostForm, CommentForm
 from .filters import PostsFilter
 
 """Функция отображения главной страницы"""
@@ -62,14 +67,33 @@ class PostsSearch(ListView):
         return context
 
 
-class PostDetail(DetailView):
+class PostDetail(FormMixin, DetailView):
     model = Post
     template_name = 'moykotel/post.html'
     context_object_name = 'post'
     pk_url_kwarg = 'id'
+    form_class = CommentForm
+
+    def get_success_url(self):
+        return reverse_lazy(kwargs={'pk': self.get_object().id})
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.comment_post = self.get_object()
+        self.object.comment_user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
-class CommentsPost(ListView):
+
+class CommentsPost(DetailView):
     model = Comment
     ordering = 'comment_date'
     template_name = 'moykotel/post.html'
@@ -130,3 +154,38 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
         news = form.save(commit=False)
         news.post_type = 'NW'
         return super().form_valid(form)
+
+
+@login_required
+@csrf_protect
+def subscriptions(request):
+    if request.method == 'POST':
+        category_id = request.POST.get('category_id')
+        category = Category.objects.get(id=category_id)
+        action = request.POST.get('action')
+
+        if action == 'subscribe':
+            Subscriber.objects.create(
+                user=request.user,
+                category=category
+            )
+        elif action == 'unsubscribe':
+            Subscriber.objects.filter(
+                user=request.user,
+                category=category,
+            ).delete()
+
+    categories_with_subscriptions = Category.objects.annotate(
+        user_subscribed=Exists(
+            Subscriber.objects.filter(
+                user=request.user,
+                category=OuterRef('pk'),
+            )
+        )
+    ).order_by('category_name')
+
+    return render(
+        request,
+        'moykotel/subscriptions.html',
+        {'categories': categories_with_subscriptions},
+    )

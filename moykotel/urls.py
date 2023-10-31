@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from . import views
-from .views import PostsList, PostDetail, PostsSearch, PostCreate, PostUpdate, PostDelete, NewsList, NewsCreate
+from .views import (PostsList, PostDetail, PostsSearch, PostCreate, PostUpdate, PostDelete, NewsList, NewsCreate, subscriptions
+)
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -26,7 +27,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('pages/', include("django.contrib.flatpages.urls")),
     path('oshibki-kotlov/', PostsList.as_view(), name='posts_list'),
-    path('oshibki-kotlov/<int:id>', PostDetail.as_view(), name='post_detail'),
     path('oshibki-kotlov/<int:id>', PostDetail.as_view(), name='post_detail'),
     path('oshibki-kotlov/search/', PostsSearch.as_view(), name='posts_search'),
     path('oshibki-kotlov/create/', PostCreate.as_view(), name='post_create'),
@@ -37,5 +37,5 @@ urlpatterns = [
     path('news/create/', NewsCreate.as_view(), name='news_create'),
     path('news/<int:pk>/edit/', PostUpdate.as_view(), name='news_update'),
     path('news/<int:pk>/delete/', PostDelete.as_view(), name='news_delete'),
+    path('subscriptions/', subscriptions, name="subscriptions"),
 ]
-

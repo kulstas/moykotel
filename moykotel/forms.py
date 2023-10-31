@@ -1,7 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import Textarea
 
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -34,3 +35,19 @@ class PostForm(forms.ModelForm):
                     "Название должно начинаться с заглавной буквы."
                 )
             return name
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment_text',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        self.fields['comment_text'].widget = Textarea(attrs={
+            'class': 'form-control',
+            'rows': 3,
+            'placeholder': 'Оставьте свой комментарий тут ...'
+        })
