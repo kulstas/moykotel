@@ -3,3 +3,5 @@ Pillow
 django-filter
 django-allauth
 python-decouple
+celery
+redis

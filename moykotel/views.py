@@ -92,7 +92,6 @@ class PostDetail(FormMixin, DetailView):
         return super().form_valid(form)
 
 
-
 class CommentsPost(DetailView):
     model = Comment
     ordering = 'comment_date'
