@@ -6,6 +6,8 @@ from django.db.models import Exists, OuterRef
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 from django.http import HttpResponse
 
 from datetime import datetime
@@ -14,7 +16,9 @@ from .models import Post, Category, Comment, Subscriber
 from .forms import PostForm, CommentForm
 from .filters import PostsFilter
 
+
 """Функция отображения главной страницы"""
+@cache_page(60)
 def index(request):
     return render(
         request,
@@ -73,6 +77,7 @@ class PostDetail(FormMixin, DetailView):
     context_object_name = 'post'
     pk_url_kwarg = 'id'
     form_class = CommentForm
+    queryset = Post.objects.all()
 
     def get_success_url(self):
         return reverse_lazy(kwargs={'pk': self.get_object().id})
@@ -90,6 +95,15 @@ class PostDetail(FormMixin, DetailView):
         self.object.comment_user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(self.kwargs["id"], None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(self.kwargs["id"], obj)
+
+        return obj
 
 
 class CommentsPost(DetailView):

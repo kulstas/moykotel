@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.decorators.cache import cache_page
 
 from . import views
 from .views import (PostsList, PostDetail, PostsSearch, PostCreate, PostUpdate, PostDelete, NewsList, NewsCreate, subscriptions
@@ -27,7 +28,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('pages/', include("django.contrib.flatpages.urls")),
     path('oshibki-kotlov/', PostsList.as_view(), name='posts_list'),
-    path('oshibki-kotlov/<int:id>', PostDetail.as_view(), name='post_detail'),
+    path('oshibki-kotlov/<int:id>', cache_page(300)(PostDetail.as_view()), name='post_detail'),
     path('oshibki-kotlov/search/', PostsSearch.as_view(), name='posts_search'),
     path('oshibki-kotlov/create/', PostCreate.as_view(), name='post_create'),
     path('oshibki-kotlov/<int:pk>/edit/', PostUpdate.as_view(), name='post_update'),
