@@ -98,10 +98,19 @@ WSGI_APPLICATION = "moykotel.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
+
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 
@@ -192,5 +201,105 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
         'TIMEOUT': 300,
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s %(levelname)s %(message)s'
+        },
+        'warning': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s'
+        },
+        'error': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(exc_info)s'
+        },
+        'file_mod': {
+            'format': '%(asctime)s %(levelname)s %(module)s'
+        },
+        'file_dump': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s'
+        },
+        'file_sec': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console_debug': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'warning'
+        },
+        'console_error': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'error'
+        },
+        "file_general": {
+            "level": "INFO",
+            "filters": ["require_debug_false"],
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            'formatter': 'file_mod'
+        },
+        "file_errors": {
+            "level": "ERRORS",
+            "class": "logging.FileHandler",
+            "filename": "errors.log",
+            'formatter': 'file_dump'
+        },
+        "file_sec": {
+            "class": "logging.FileHandler",
+            "filename": "security.log",
+            'formatter': 'file_sec'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            "filters": ["require_debug_false"],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'warning'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file_errors', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['file_errors', 'mail_admins'],
+        },
+        'django.template' : {
+            'handlers': ['file_errors'],
+        },
+        'django.db.backends': {
+            'handlers': ['file_errors'],
+        },
+        'django.security': {
+            'handlers': ['file_sec'],
+        }
     }
 }
