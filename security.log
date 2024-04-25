@@ -1,0 +1,2 @@
+2024-03-28 21:38:34,706 WARNING log Forbidden (CSRF cookie not set.): /i18n/setlang/
+2024-03-28 21:38:44,913 WARNING log Forbidden (CSRF cookie not set.): /i18n/setlang/

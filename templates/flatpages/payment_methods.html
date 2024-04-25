@@ -1,0 +1,36 @@
+{% extends 'moykotel/default.html' %}
+{% load i18n %}
+
+{% block page_content %}
+<!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder">{% trans "Способы оплаты" %}</h1>
+                    </div>
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="mb-3">{% trans "Способы пополнения баланса личного кабинета" %}</h2>
+                            <section class="mb-5">
+                                {{ flatpage.content }}
+                            </section>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="card border-0 bg-light mt-xl-5">
+                                <div class="card-body p-4 py-lg-5">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="text-center">
+                                            <div class="h6 fw-bolder">{% trans "Рекламный баннер" %}</div>
+                                            <p class="text-muted mb-4">
+                                                {% trans "На этом месте могла быть Ваша реклама." %}
+                                            </p>
+                                            <a href="#">{% trans "Разместить" %}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock page_content %}

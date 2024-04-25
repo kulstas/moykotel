@@ -1,5 +1,6 @@
 {% load custom_tags %}
 {% load cache %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,71 +23,86 @@
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
-            {% cache 180 menu %}
+
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="/">МОЙ КОТЁЛ</a>
+                    <a class="navbar-brand" href="/">{% trans "МОЙ КОТЁЛ" %}</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% trans "Главная" %}</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Справочник ошибок</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Справочник ошибок" %}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="{% url 'posts_list' %}">Все статьи</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'posts_search' %}">Поиск по статьям</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'posts_list' %}">{% trans "Все статьи" %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'posts_search' %}">{% trans "Поиск по статьям" %}</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Информация</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Информация" %}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="/news">Новости</a></li>
-                                    <li><a class="dropdown-item" href="/faq">ЧаВо</a></li>
+                                    <li><a class="dropdown-item" href="/news">{% trans "Новости" %}</a></li>
+                                    <li><a class="dropdown-item" href="/payment-methods">{% trans "Способы оплаты" %}</a></li>
+                                    <li><a class="dropdown-item" href="/faq">{% trans "ЧаВо" %}</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="/about">О сервисе</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/price">Тарифы</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/contact">Контакты</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/about">{% trans "О сервисе" %}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/price">{% trans "Тарифы" %}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/contact">{% trans "Контакты" %}</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="/lk" role="button" data-bs-toggle="dropdown" aria-expanded="false">Личный кабинет</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="/lk" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Личный кабинет" %}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                                 {% if user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="/subscriptions">Подписки</a></li>
-                                    <li><a class="dropdown-item" href="/lk">ЛК</a></li>
+                                    <li><a class="dropdown-item" href="/subscriptions">{% trans "Подписки" %}</a></li>
+                                    <li><a class="dropdown-item" href="/lk">{% trans "ЛК" %}</a></li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="/accounts/login">Войти</a></li>
-                                    <li><a class="dropdown-item" href="/accounts/signup">Регистрация</a></li>
+                                    <li><a class="dropdown-item" href="/accounts/login">{% trans "Войти" %}</a></li>
+                                    <li><a class="dropdown-item" href="/accounts/signup">{% trans "Регистрация" %}</a></li>
                                 {% endif %}
                                 </ul>
                             </li>
                         </ul>
                     </div>
+
+                <!-- Change locale -->
+                <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
+                    <input type="hidden" name="next" value="{{ redirect_to }}">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <select name="language" id="">
+                        {% get_available_languages as LANGUAGES %} <!-- получаем языки -->
+                        {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
+
+                        {% for language in languages %} <!-- Итерируясь по списку, выводим их название на языке пользователя и код -->
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                {{ language.name_local }} - {{ language.code }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Ok">
+                </form>
                 </div>
             </nav>
-            {% endcache %}
 
             {% block page_content %}
             {% endblock page_content %}
         </main>
 
-        {% cache 180 footer %}
         <!-- Footer-->
         <footer class="bg-dark py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-white">{% copyright '%Y' %}</div></div>
                     <div class="col-auto">
-                        <a class="link-light small" href="#!">Конфиденциальность</a>
+                        <a class="link-light small" href="#!">{% trans "Конфиденциальность" %}</a>
                         <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Правила</a>
+                        <a class="link-light small" href="#!">{% trans "Правила" %}</a>
                         <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="/contact/">Контакты</a>
+                        <a class="link-light small" href="/contact/">{% trans "Контакты" %}</a>
                     </div>
                 </div>
             </div>
         </footer>
-        {% endcache %}
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

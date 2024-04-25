@@ -1,5 +1,100 @@
 {% extends 'moykotel/default.html' %}
+{% load i18n %}
 
 {% block page_content %}
-{{ flatpage.content }}
+<!-- Pricing section-->
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder">{% trans "Тарифы" %}</h1>
+                        <p class="lead fw-normal text-muted mb-0">{% trans "Аккаунт доступа МАСТЕР" %}</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <!-- Pricing card 1 mo -->
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card mb-5 mb-xl-0">
+                                <div class="card-body p-5">
+                                    <div class="small text-uppercase fw-bold text-muted">1 {% trans "месяц" %}</div>
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">99₽</span>
+<!--                                        <span class="text-muted">/ {% trans "мес" %}.</span>-->
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{% trans "до" %} 10 {% trans "заявок" %}</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Безлимитный доступ к схемам" %}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Доступ к инструкциям" %}
+                                        </li>
+                                    </ul>
+                                    <div class="d-grid"><a class="btn btn-outline-primary" href="#!">{% trans "Приобрести доступ" %}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pricing card 3 mo -->
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card mb-5 mb-xl-0">
+                                <div class="card-body p-5">
+                                    <div class="small text-uppercase fw-bold">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        3 {% trans "месяца" %}
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">270₽</span>
+<!--                                        <span class="text-muted">/ {% trans "мес" %}.</span>-->
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                         <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{% trans "до" %} 40 {% trans "заявок" %}</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Безлимитный доступ к схемам" %}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Доступ к инструкциям" %}
+                                        </li>
+                                    </ul>
+                                    <div class="d-grid"><a class="btn btn-primary" href="#!">{% trans "Приобрести доступ" %}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pricing card 1 year -->
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card">
+                                <div class="card-body p-5">
+                                    <div class="small text-uppercase fw-bold text-muted">1 {% trans "год" %}</div>
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">890₽</span>
+<!--                                        <span class="text-muted">/ {% trans "год" %}.</span>-->
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong>{% trans "до" %} 100 {% trans "заявок" %}</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Безлимитный доступ к схемам" %}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            {% trans "Доступ к инструкциям" %}
+                                        </li>
+                                    </ul>
+                                    <div class="d-grid"><a class="btn btn-outline-primary" href="#!">{% trans "Приобрести доступ" %}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 {% endblock page_content %}

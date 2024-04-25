@@ -4,13 +4,14 @@
 <!-- Подгружаем кастомные фильтры и теги -->
 {% load custom_filters %}
 {% load custom_tags %}
+{% load i18n %}
 
 {% block page_content %}
     {% if posts %}
             <!-- Blog preview section-->
             <section class="py-5">
                 <div class="container px-5">
-                    <h2 class="fw-bolder fs-5 mb-4">Всего {{ posts|length }} постов — по состоянию на {{ time_now|date:'d-m-Y' }}</h2>
+                    <h2 class="fw-bolder fs-5 mb-4">{% trans "Всего" %} {{ posts|length }} {% trans "постов" %} — {% trans "по состоянию на" %} {{ time_now|date:'d-m-Y' }}</h2>
                     <div class="row gx-5">
                     {% for post in posts %}
                         {% if post.post_type == 'AR' %}

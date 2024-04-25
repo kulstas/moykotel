@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "modeltranslation",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -61,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -93,24 +96,28 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = "moykotel.wsgi.application"
 
+LANGUAGES = [
+    ('en-us', 'English'),
+    ('ru', 'Русский')
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # }
-
     "default": {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+
+    # "default": {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # },
 }
 
 
@@ -130,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Europe/Moscow"
 
@@ -138,6 +145,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -237,40 +247,40 @@ LOGGING = {
     },
     'handlers': {
         'console_debug': {
-            'level': 'DEBUG',
+            'level': 'CRITICAL',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': "simple"
         },
         'console_warning': {
             'level': 'WARNING',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'warning'
+            'formatter': "warning"
         },
         'console_error': {
             'level': 'WARNING',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'error'
+            'formatter': "error"
         },
         "file_general": {
             "level": "INFO",
             "filters": ["require_debug_false"],
             "class": "logging.FileHandler",
             "filename": "general.log",
-            'formatter': 'file_mod'
+            'formatter': "file_mod"
         },
         "file_errors": {
-            "level": "ERRORS",
+            "level": "CRITICAL",
             "class": "logging.FileHandler",
             "filename": "errors.log",
-            'formatter': 'file_dump'
+            'formatter': "file_dump"
         },
         "file_sec": {
             "class": "logging.FileHandler",
             "filename": "security.log",
-            'formatter': 'file_sec'
+            'formatter': "file_sec"
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -281,7 +291,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['console_debug', 'console_warning', 'console_error'],
             'propagate': True,
         },
         'django.request': {
@@ -292,7 +302,7 @@ LOGGING = {
         'django.server': {
             'handlers': ['file_errors', 'mail_admins'],
         },
-        'django.template' : {
+        'django.template': {
             'handlers': ['file_errors'],
         },
         'django.db.backends': {

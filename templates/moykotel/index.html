@@ -1,4 +1,5 @@
 {% extends 'moykotel/default.html' %}
+{% load i18n %}
 
 {% block page_content %}
             <header class="bg-dark py-5">
@@ -6,11 +7,11 @@
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-8 col-xl-7 col-xxl-6">
                             <div class="my-5 text-center text-xl-start">
-                                <h1 class="display-5 fw-bolder text-white mb-2">Определить неисправность по коду ошибки котла</h1>
-                                <p class="lead fw-normal text-white-50 mb-4">Поможем определить неисправность, подобрать запчасти и вызвать сервисного мастера в Вашем городе!</p>
+                                <h1 class="display-5 fw-bolder text-white mb-2">{% trans "Определить неисправность по коду ошибки котла" %}</h1>
+                                <p class="lead fw-normal text-white-50 mb-4">{% trans "Поможем определить неисправность, подобрать запчасти и вызвать сервисного мастера в Вашем городе!" %}</p>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Определить </a>
-                                    <a class="btn btn-outline-light btn-lg px-4" href="#!">Вызвать мастера</a>
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">{% trans "Определить" %}</a>
+                                    <a class="btn btn-outline-light btn-lg px-4" href="#!">{% trans "Вызвать мастера" %}</a>
                                 </div>
                             </div>
                         </div>
@@ -22,28 +23,28 @@
             <section class="py-5" id="features">
                 <div class="container px-5 my-5">
                     <div class="row gx-5">
-                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start building.</h2></div>
+                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">{% trans "На этом ресурсе вы найдете" %}</h2></div>
                         <div class="col-lg-8">
                             <div class="row gx-5 row-cols-1 row-cols-md-2">
                                 <div class="col mb-5 h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                                    <h2 class="h5">{% trans "Справочник ошибок" %}</h2>
+                                    <p class="mb-0">{% trans "Лёгкий поиск описания ошибки Вашего котла." %}</p>
                                 </div>
                                 <div class="col mb-5 h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                                    <h2 class="h5">{% trans "Вызов мастера" %}</h2>
+                                    <p class="mb-0">{% trans "Можете оставить заявку, которую мы передадим ближайшему мастеру." %}</p>
                                 </div>
                                 <div class="col mb-5 mb-md-0 h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                                    <h2 class="h5">{% trans "Личный кабинет" %}</h2>
+                                    <p class="mb-0">{% trans "Вся необходимая информация по обслуживанию Вашего котла в одном месте." %}</p>
                                 </div>
                                 <div class="col h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                                    <h2 class="h5">{% trans "Форум" %}</h2>
+                                    <p class="mb-0">{% trans "Задаввайте вопросы на нашем форуме и получайте ответы от экспертов." %}</p>
                                 </div>
                             </div>
                         </div>
@@ -56,13 +57,13 @@
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-10 col-xl-7">
                             <div class="text-center">
-                                <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
+                                <div class="fs-4 mb-4 fst-italic">{% trans "Пользоваться этим сервисом сплошное удовольствие!" %}</div>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="fw-bold">
-                                        Tom Ato
+                                        {% trans "Ирина Петровна" %}
                                         <span class="fw-bold text-primary mx-1">/</span>
-                                        CEO, Pomodoro
+                                        {% trans "Отчаянная домохозяйка" %}
                                     </div>
                                 </div>
                             </div>
@@ -76,8 +77,8 @@
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
                             <div class="text-center">
-                                <h2 class="fw-bolder">From our blog</h2>
-                                <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+                                <h2 class="fw-bolder">{% trans "Свежие новости" %}</h2>
+                                <p class="lead fw-normal text-muted mb-5">{% trans "Последние добавленные посты о нас" %}</p>
                             </div>
                         </div>
                     </div>
@@ -86,9 +87,9 @@
                             <div class="card h-100 shadow border-0">
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
-                                    <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Новости</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Заголовок новости</h5></a>
+                                    <p class="card-text mb-0">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
@@ -108,8 +109,8 @@
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                                    <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Заголовок новости</h5></a>
+                                    <p class="card-text mb-0">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. </p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
@@ -128,9 +129,9 @@
                             <div class="card h-100 shadow border-0">
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                                    <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Новости</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Заголовок новости</h5></a>
+                                    <p class="card-text mb-0">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
@@ -150,15 +151,15 @@
                     <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                             <div class="mb-4 mb-xl-0">
-                                <div class="fs-3 fw-bold text-white">New products, delivered to you.</div>
-                                <div class="text-white-50">Sign up for our newsletter for the latest updates.</div>
+                                <div class="fs-3 fw-bold text-white">{% trans "Оставайтесь в курсе!" %}</div>
+                                <div class="text-white-50">{% trans "Подписка на новости и обновления" %}</div>
                             </div>
                             <div class="ms-xl-4">
                                 <div class="input-group mb-2">
-                                    <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter" />
-                                    <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
+                                    <input class="form-control" type="text" placeholder='{% trans "Email адрес ..." %}' aria-label='{% trans "Email адрес ..." %}' aria-describedby="button-newsletter" />
+                                    <button class="btn btn-outline-light" id="button-newsletter" type="button">{% trans "Подписаться" %}</button>
                                 </div>
-                                <div class="small text-white-50">We care about privacy, and will never share your data.</div>
+                                <div class="small text-white-50">{% trans "Мы заботимся о вашей конфеденциальности." %}</div>
                             </div>
                         </div>
                     </aside>

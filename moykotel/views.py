@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.http import HttpResponse
+from django.utils.translation import gettext as _
 
 from datetime import datetime
 

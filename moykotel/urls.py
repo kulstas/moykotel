@@ -39,4 +39,5 @@ urlpatterns = [
     path('news/<int:pk>/edit/', PostUpdate.as_view(), name='news_update'),
     path('news/<int:pk>/delete/', PostDelete.as_view(), name='news_delete'),
     path('subscriptions/', subscriptions, name="subscriptions"),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
