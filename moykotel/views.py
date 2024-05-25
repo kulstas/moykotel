@@ -10,8 +10,11 @@ from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.utils.translation import gettext as _
+from django.utils import timezone
+from django.shortcuts import redirect
 
 from datetime import datetime
+import pytz
 
 from .models import Post, Category, Comment, Subscriber
 from .forms import PostForm, CommentForm
@@ -54,6 +57,33 @@ class PostsList(ListView):
     #     'post_title'
     # )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_now'] = datetime.utcnow()
+        context['current_time'] = timezone.localtime(timezone.now())
+        context['timezones'] = pytz.common_timezones
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        request.session['django_timezone'] = request.POST['timezone']
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(self.kwargs["id"], None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(self.kwargs["id"], obj)
+
+        return obj
+
 class PostsSearch(ListView):
     model = Post
     template_name = 'moykotel/search.html'
@@ -69,7 +99,29 @@ class PostsSearch(ListView):
         context = super().get_context_data(**kwargs)
         context['time_now'] = datetime.utcnow()
         context['filterset'] = self.filterset
+        context['current_time'] = timezone.localtime(timezone.now())
+        context['timezones'] = pytz.common_timezones
+
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        request.session['django_timezone'] = request.POST['timezone']
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(self.kwargs["id"], None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(self.kwargs["id"], obj)
+
+        return obj
 
 
 class PostDetail(FormMixin, DetailView):
@@ -83,8 +135,19 @@ class PostDetail(FormMixin, DetailView):
     def get_success_url(self):
         return reverse_lazy(kwargs={'pk': self.get_object().id})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['current_time'] = timezone.localtime(timezone.now())
+        context['timezones'] = pytz.common_timezones
+
+        return context
+
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        request.session['django_timezone'] = request.POST['timezone']
         form = self.get_form()
+
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -95,6 +158,7 @@ class PostDetail(FormMixin, DetailView):
         self.object.comment_post = self.get_object()
         self.object.comment_user = self.request.user
         self.object.save()
+
         return super().form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -203,3 +267,4 @@ def subscriptions(request):
         'moykotel/subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+

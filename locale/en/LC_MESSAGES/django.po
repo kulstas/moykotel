@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-09 23:11+0300\n"
+"POT-Creation-Date: 2024-05-25 00:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,7 +168,7 @@ msgid "Адрес"
 msgstr "Address"
 
 #: templates/flatpages/payment_methods.html:9
-#: templates/moykotel/default.html:46
+#: templates/moykotel/default.html:47
 msgid "Способы оплаты"
 msgstr "Payment methods"
 
@@ -190,7 +190,7 @@ msgstr "This place could have been your advertisement."
 msgid "Разместить"
 msgstr "Place an advertisement"
 
-#: templates/flatpages/price.html:9 templates/moykotel/default.html:51
+#: templates/flatpages/price.html:9 templates/moykotel/default.html:52
 msgid "Тарифы"
 msgstr "Price"
 
@@ -239,71 +239,71 @@ msgstr "month"
 msgid "год"
 msgstr "year"
 
-#: templates/moykotel/default.html:30
+#: templates/moykotel/default.html:31
 msgid "МОЙ КОТЁЛ"
 msgstr "MOY KOTEL"
 
-#: templates/moykotel/default.html:34
+#: templates/moykotel/default.html:35
 msgid "Главная"
 msgstr "Main"
 
-#: templates/moykotel/default.html:36 templates/moykotel/index.html:31
+#: templates/moykotel/default.html:37 templates/moykotel/index.html:31
 msgid "Справочник ошибок"
 msgstr "Error reference"
 
-#: templates/moykotel/default.html:38
+#: templates/moykotel/default.html:39
 msgid "Все статьи"
 msgstr "All articles"
 
-#: templates/moykotel/default.html:39
+#: templates/moykotel/default.html:40
 msgid "Поиск по статьям"
 msgstr "Search by articles"
 
-#: templates/moykotel/default.html:43
+#: templates/moykotel/default.html:44
 msgid "Информация"
 msgstr "Information"
 
-#: templates/moykotel/default.html:45
+#: templates/moykotel/default.html:46
 msgid "Новости"
 msgstr "News"
 
-#: templates/moykotel/default.html:47
+#: templates/moykotel/default.html:48
 msgid "ЧаВо"
 msgstr "FAQ"
 
-#: templates/moykotel/default.html:50
+#: templates/moykotel/default.html:51
 msgid "О сервисе"
 msgstr "About"
 
-#: templates/moykotel/default.html:52 templates/moykotel/default.html:101
+#: templates/moykotel/default.html:53 templates/moykotel/default.html:130
 msgid "Контакты"
 msgstr "Contacts"
 
-#: templates/moykotel/default.html:54 templates/moykotel/index.html:41
+#: templates/moykotel/default.html:55 templates/moykotel/index.html:41
 msgid "Личный кабинет"
 msgstr "Profile"
 
-#: templates/moykotel/default.html:57
+#: templates/moykotel/default.html:58
 msgid "Подписки"
 msgstr "Subscriptions"
 
-#: templates/moykotel/default.html:58
+#: templates/moykotel/default.html:59
 msgid "ЛК"
 msgstr "LK"
 
-#: templates/moykotel/default.html:60
+#: templates/moykotel/default.html:61
 msgid "Войти"
 msgstr "Sign In"
 
-#: templates/moykotel/default.html:61
+#: templates/moykotel/default.html:62
 msgid "Регистрация"
 msgstr "Sign Up"
 
-#: templates/moykotel/default.html:97
+#: templates/moykotel/default.html:126
 msgid "Конфиденциальность"
 msgstr "Confidentiality"
 
-#: templates/moykotel/default.html:99
+#: templates/moykotel/default.html:128
 msgid "Правила"
 msgstr "Rules"
 
@@ -345,8 +345,7 @@ msgstr "You can leave a request, which we will send to the nearest master."
 
 #: templates/moykotel/index.html:42
 msgid "Вся необходимая информация по обслуживанию Вашего котла в одном месте."
-msgstr ""
-"All the necessary information on the maintenance of your boiler in one place."
+msgstr "All the necessary information on the maintenance of your boiler in one place."
 
 #: templates/moykotel/index.html:46
 msgid "Форум"
@@ -408,6 +407,10 @@ msgstr "News"
 #: templates/moykotel/news.html:14
 msgid "на"
 msgstr "on"
+
+#: templates/moykotel/post.html:90
+msgid "Оставить комментарий"
+msgstr "Post comment"
 
 #: templates/moykotel/posts.html:14
 msgid "постов"
@@ -1992,6 +1995,10 @@ msgstr ""
 #: venv/lib/python3.9/site-packages/kombu/transport/qpid.py:1334
 #, python-format
 msgid "Unable to connect to qpid with SASL mechanism %s"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/modeltranslation/widgets.py:24
+msgid "None"
 msgstr ""
 
 #, fuzzy

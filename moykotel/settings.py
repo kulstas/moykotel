@@ -69,6 +69,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    'moykotel.middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = "moykotel.urls"

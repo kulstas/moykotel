@@ -2,7 +2,7 @@
 {% extends 'moykotel/default.html' %}
 {% load custom_filters %}
 {% load i18n %}
-
+{% load tz %}
 {% block page_content %}
             <section class="py-5">
                 <div class="container px-5 my-5">
@@ -59,6 +59,10 @@
                                     <h1 class="fw-bolder mb-1">{{ post.post_title }}</h1>
                                     <!-- Post meta content-->
                                     <div class="text-muted fst-italic mb-2">{{ post.post_date|date_format }}</div>
+                                    <div style="float: right">
+                                        {% get_current_timezone as TIME_ZONE %}
+                                        {{ current_time|timezone:TIME_ZONE }} ({{ TIME_ZONE }})
+                                    </div>
                                     <!-- Post categories-->
                                     {% for category in post.post_category.all %}
                                         <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'posts_search' %}?post_category={{ category.id }}">{{ category.category_name }}</a>
@@ -80,7 +84,7 @@
                                             {% csrf_token %}
                                             {{ form }}
                                             <div class="d-grid">
-                                                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Оставить комментарий</button>
+                                                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">{% trans "Оставить комментарий" %}</button>
                                             </div>
                                         </form>
 
